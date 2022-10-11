@@ -1,6 +1,7 @@
 import React from "react";
 import '../style/search.css';
 import CharComp from "./CharComp";
+import properties from "../libs/properties";
 
 class SearchComp extends React.Component {
 
@@ -13,6 +14,7 @@ class SearchComp extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.setProfileVisible = this.setProfileVisible.bind(this, false);
     }
 
     handleChange(event) {
@@ -30,11 +32,17 @@ class SearchComp extends React.Component {
             .then(res => res.json())
             .then((res) => {
                 this.setState({
-                    isProfileVisible: true,
                     profileInfo: res.results,
+                    isProfileVisible: true
                 })
             });
         event.preventDefault();
+    }
+
+    setProfileVisible(isProfileVisible) {
+        this.setState({
+            isProfileVisible: isProfileVisible
+        })
     }
 
 
@@ -45,7 +53,7 @@ class SearchComp extends React.Component {
                     !this.state.isProfileVisible ?
                         <form onSubmit={this.handleSubmit}>
                             <label>
-                                Choose the profile character:
+                                {properties.labels.choose}
                                 <input type="text"
                                        value={this.state.charValue}
                                        onChange={this.handleChange}
@@ -55,7 +63,8 @@ class SearchComp extends React.Component {
                         </form>
                         :
                         <CharComp
-                            characters={this.state.profileInfo}/>
+                            characters={this.state.profileInfo}
+                            callback={this.setProfileVisible}/>
                 }
             </div>
         );
