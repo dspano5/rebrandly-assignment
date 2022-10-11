@@ -1,5 +1,7 @@
 import React from "react";
 import '../style/search.css';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 import CharComp from "./CharComp";
 import properties from "../libs/properties";
 
@@ -29,13 +31,21 @@ class SearchComp extends React.Component {
                 method: "GET"
             }
         )
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) {
+                    return Promise.reject(res.status);
+                } else {
+                    return res.json();
+                }
+            })
             .then((res) => {
                 this.setState({
                     profileInfo: res.results,
                     isProfileVisible: true
                 })
-            });
+            }).catch((error) => {
+            alert("Error: " + error);
+        });
         event.preventDefault();
     }
 
@@ -48,25 +58,30 @@ class SearchComp extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <>
                 {
                     !this.state.isProfileVisible ?
-                        <form onSubmit={this.handleSubmit}>
-                            <label>
-                                {properties.labels.choose}
-                                <input type="text"
-                                       value={this.state.charValue}
-                                       onChange={this.handleChange}
+                        <Form onSubmit={this.handleSubmit}>
+                            <Form.Group className="mb-3">
+                                <Form.Label>
+                                    {properties.labels.choose}
+                                </Form.Label>
+                                <Form.Control
+                                    value={this.state.charValue}
+                                    onChange={this.handleChange}
                                 />
-                            </label>
-                            <input type="submit" value="Submit"/>
-                        </form>
+                            </Form.Group>
+                            <Button variant={"outline-info"}
+                                    type="submit">
+                                {properties.labels.search}
+                            </Button>
+                        </Form>
                         :
                         <CharComp
                             characters={this.state.profileInfo}
                             callback={this.setProfileVisible}/>
                 }
-            </div>
+            </>
         );
     }
 }
