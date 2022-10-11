@@ -1,14 +1,32 @@
+.header {
+    min-height: 5vh;
+    text-align: center;
+    background-color: #282c34;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .container {
     text-align: center;
     background-color: #282c34;
     min-width: 100vw;
-    min-height: 100vh;
+    min-height: 95vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
+}
+
+/* div contenitore della label e form*/
+.container .mb-3 {
+    text-align: left;
+}
+
+.container .form-label {
+    font-size: 16px;
 }
 
 .container .button {
