@@ -1,7 +1,9 @@
 module.exports = {
 
     labels: {
-        choose: "Choose the profile character:",
+        title: "Welcome to the Rick and Morty app",
+        choose: "Type the character:",
+        search: "Search",
         leftArrow: "<",
         rightArrow: ">",
         name: "Name:",
